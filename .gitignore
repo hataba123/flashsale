@@ -1,0 +1,4 @@
+# Environment files chứa thông tin nhạy cảm
+.env
+.env.*
+!.env.example

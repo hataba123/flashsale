@@ -1,0 +1,43 @@
+name: flashsale-infrastructure
+
+services:
+  inventory-db:
+    image: postgres:18-alpine
+    container_name: flashsale-inventory-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    ports:
+      # Cho phép Inventory API trên máy Windows kết nối qua IP Ubuntu.
+      - "5432:5432"
+
+    volumes:
+      # PostgreSQL 18 sử dụng đường dẫn volume này.
+      - inventory_postgres_data:/var/lib/postgresql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+    networks:
+      - flashsale-network
+
+networks:
+  flashsale-network:
+    name: flashsale-network
+    driver: bridge
+
+volumes:
+  inventory_postgres_data:
+    name: flashsale-inventory-postgres-data
