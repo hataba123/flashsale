@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/services/" />
+  <Folder Name="/src/services/inventory/">
+    <Project Path="src/services/inventory/FlashSale.Inventory.Api/FlashSale.Inventory.Api.csproj" />
+  </Folder>
+</Solution>
