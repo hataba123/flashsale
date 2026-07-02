@@ -2,3 +2,24 @@
 .env
 .env.*
 !.env.example
+
+# .NET build artifacts
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Test output
+**/TestResults/
+**/coverage/
+
+# Next.js
+**/node_modules/
+**/.next/
+**/out/
+
+# Logs
+*.log
