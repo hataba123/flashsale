@@ -1,4 +1,5 @@
 using FlashSale.Inventory.Api.Data;
+using FlashSale.Inventory.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
 {
     options.UseNpgsql(inventoryDatabaseConnectionString);
 });
+builder.Services.AddScoped<IInventoryService, InventoryService>();
 
 // MỚI: Cho phép Next.js chạy tại localhost:3000 gọi API.
 builder.Services.AddCors(options =>
