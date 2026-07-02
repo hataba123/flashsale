@@ -1,7 +1,23 @@
+using FlashSale.Inventory.Api.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var inventoryDatabaseConnectionString =
+    builder.Configuration.GetConnectionString("InventoryDatabase");
+
+if (string.IsNullOrWhiteSpace(inventoryDatabaseConnectionString))
+{
+    throw new InvalidOperationException(
+        "Connection string 'InventoryDatabase' is not configured.");
+}
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddDbContext<InventoryDbContext>(options =>
+{
+    options.UseNpgsql(inventoryDatabaseConnectionString);
+});
 
 // MỚI: Cho phép Next.js chạy tại localhost:3000 gọi API.
 builder.Services.AddCors(options =>
